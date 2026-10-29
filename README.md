@@ -6,6 +6,8 @@ This script checks every minute and cleans up those leftovers automatically.
 
 > Unofficial. Not affiliated with or endorsed by SteelSeries. Once SteelSeries fixes the bug, [uninstall this](#uninstall).
 
+> **This may already be fixed.** On one machine the leftovers stopped on 2026-10-23 and hadn't come back six days later. That's a single machine, not an announcement from SteelSeries, so check whether you still have the problem before installing anything.
+
 ---
 
 ## Do I have this problem?
@@ -76,7 +78,15 @@ Start-Process powershell -Verb RunAs -ArgumentList '-NoProfile -Command "Unregis
 
 ## How do I know when SteelSeries has fixed it?
 
-After a GG update, play normally for a few sessions, then run the **Status** command above. If no new entries have appeared in the log since the update, the leftovers have stopped happening and you can uninstall.
+After a GG update, play normally for a few sessions, then run the Status command again:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File "$env:ProgramData\CaptureReaper\CaptureReaper.ps1" -Status
+```
+
+Look at the dates in **Last 10 kills**. If nothing new has been logged since the update, the leftovers have stopped and you can [uninstall](#uninstall). Give it a week of normal use before deciding — an empty log only means something if the reaper was running and you were recording.
+
+Check `Task: INSTALLED` at the top of that output, not Task Scheduler or `Get-ScheduledTask`: the task runs as SYSTEM, so an ordinary window can't see it and will claim it isn't there.
 
 ## FAQ
 
